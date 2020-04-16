@@ -33,20 +33,19 @@ node {
 //        }
 //    }
 
-      stage('List Docker Containers') {
-        sh 'docker ps --all'
-      }
+    stage('List Docker Containers') {
+      sh 'docker ps --all'
+    }
     
-       stage('Stop Docker Containers') {
-         sh 'docker stop $(docker ps -a -q)'
-      }
+    stage('Stop Docker Containers') {
+      sh 'docker stop $(docker ps -a -q)'
+    }
     
-        stage('Stop Docker Containers') {
-          sh 'docker rm $(docker ps -a -q)'
-      }
+    stage('Stop Docker Containers') {
+      sh 'docker rm $(docker ps -a -q)'
+    }
     
-      stage('Remove Docker Images') {
-        sh 'docker rmi delu2000-cloud/hellonode'
-      }
-    
+    stage('Remove Docker Images') {
+      sh 'docker rmi delu2000-cloud/hellonode'
+    }
 }
