@@ -19,5 +19,12 @@ node {
 
           // Run application using Docker image
           sh "docker run -d --name image${env.BUILD_ID}  -p 8000:8000 image-${env.JOB_NAME}:${env.BUILD_ID}"
-      }
+
+        } catch (error) {
+        } finally {
+          // Stop and remove database container here
+          sh 'docker stop image${env.BUILD_ID}'
+          sh 'docker rm image${env.BUILD_ID}'
+        }
+    }
 }
