@@ -44,10 +44,6 @@ node {
         stage('Stop Docker Containers') {
           sh 'docker rm $(docker ps -a -q)'
       }
-
-        stage('Remove All Stopped Docker Containers') {
-          sh 'docker system prune --force'
-      }
     
       stage('Remove Docker Images') {
         sh 'docker rmi $(docker images --quiet) || true'
