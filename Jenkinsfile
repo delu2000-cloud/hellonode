@@ -32,10 +32,6 @@ node {
 //            app.push("latest")
 //        }
 //    }
-
-    stage('List Docker Containers') {
-      sh 'docker ps --all'
-    }
     
     stage('Stop Docker Containers') {
       sh 'docker stop $(docker ps -a -q)'
