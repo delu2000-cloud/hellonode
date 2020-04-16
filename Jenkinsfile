@@ -10,7 +10,8 @@ node {
 
         /* This builds the actual image; synonymous to
          * docker build on the command line */
-        app = docker.image("image-${env.JOB_NAME}:${env.BUILD_ID}").withRun('-p 8000:8000') 
+        app = docker.build("image-${env.JOB_NAME}:${env.BUILD_ID}")
+        app = docker.image("image-${env.JOB_NAME}:${env.BUILD_ID}").withRun('-p 8000:8000')
     }
 
     stage('Test image') {
