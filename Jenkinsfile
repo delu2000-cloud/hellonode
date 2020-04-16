@@ -46,7 +46,7 @@ node {
       }
     
       stage('Remove Docker Images') {
-        sh 'docker rmi $(docker images --quiet) || true'
+        sh 'docker rmi delu2000-cloud/hellonode'
       }
     
 }
