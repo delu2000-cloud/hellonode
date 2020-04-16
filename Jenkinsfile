@@ -5,33 +5,26 @@ node {
         /* Let's make sure we have the repository cloned to our workspace */
         checkout scm
     }
-
-    stage('Build image') {
-
-        /* This builds the actual image; synonymous to
-         * docker build on the command line */
-        app = docker.build("image-${env.JOB_NAME}:${env.BUILD_ID}")
-        app = docker.run("image-${env.JOB_NAME}:${env.BUILD_ID}").withRun('-p 8000:8000')
+    
+    
+    stage('Create Docker Image') {
+        docker.build("image-${env.JOB_NAME}:${env.BUILD_ID}")
     }
 
-    stage('Test image') {
 
-        /* Ideally, we would run a test framework against our image.
-         * For this example, we're using a Volkswagen-type approach ;-) */
-        app.inside {
-            sh 'echo "Tests passed"'
+    stage ('Run Application') {
+        try {
+          // Start database container here
+          // sh 'docker run -d --name db -p 8091-8093:8091-8093 -p 11210:11210 arungupta/oreilly-couchbase:latest'
+
+          // Run application using Docker image
+          sh "docker run -d --name image${env.BUILD_ID}  -p 8000:8000 "image-${env.JOB_NAME}:${env.BUILD_ID}"
+
+        } catch (error) {
+        } finally {
+          // Stop and remove database container here
+          sh 'docker stop image${env.BUILD_ID}'
+          sh 'docker rm image${env.BUILD_ID}'
         }
-    }
-    
-    stage('Stop Docker Containers') {
-      sh 'docker stop $(docker ps -a -q)'
-    }
-    
-    stage('Stop Docker Containers') {
-      sh 'docker rm $(docker ps -a -q)'
-    }
-    
-    stage('Remove Docker Images') {
-      sh 'docker rmi "image-${env.JOB_NAME}:${env.BUILD_ID}"'
     }
 }
