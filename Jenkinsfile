@@ -10,7 +10,7 @@ node {
 
         /* This builds the actual image; synonymous to
          * docker build on the command line */
-        app = docker.build("my-image:${env.BUILD_ID}").withRun('-p 8000:8000') 
+        app = docker.image("image-${env.JOB_NAME}:${env.BUILD_ID}").withRun('-p 8000:8000') 
     }
 
     stage('Test image') {
@@ -31,6 +31,6 @@ node {
     }
     
     stage('Remove Docker Images') {
-      sh 'docker rmi "my-image:${env.BUILD_ID}"'
+      sh 'docker rmi "image-${env.JOB_NAME}:${env.BUILD_ID}"'
     }
 }
