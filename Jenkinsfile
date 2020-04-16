@@ -10,7 +10,7 @@ node {
 
         /* This builds the actual image; synonymous to
          * docker build on the command line */
-        app = docker.build("delu2000-cloud/hellonode")
+        app = docker.build("my-image:${env.BUILD_ID}").withRun('-p 8000:8000') 
     }
 
     stage('Test image') {
@@ -21,17 +21,6 @@ node {
             sh 'echo "Tests passed"'
         }
     }
-
-//    stage('Push image') {
-        /* Finally, we'll push the image with two tags:
-         * First, the incremental build number from Jenkins
-         * Second, the 'latest' tag.
-         * Pushing multiple tags is cheap, as all the layers are reused. */
-//        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-//            app.push("${env.BUILD_NUMBER}")
-//            app.push("latest")
-//        }
-//    }
     
     stage('Stop Docker Containers') {
       sh 'docker stop $(docker ps -a -q)'
@@ -42,6 +31,6 @@ node {
     }
     
     stage('Remove Docker Images') {
-      sh 'docker rmi delu2000-cloud/hellonode'
+      sh 'docker rmi "my-image:${env.BUILD_ID}"'
     }
 }
