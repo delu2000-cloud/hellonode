@@ -10,7 +10,7 @@ node {
 
         /* This builds the actual image; synonymous to
          * docker build on the command line */
-        app = docker.build("genomicsengland/hellonode")
+        app = docker.build("delu2000-cloud/hellonode")
     }
 
     stage('Test image') {
