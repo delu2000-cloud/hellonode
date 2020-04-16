@@ -1,5 +1,5 @@
 {
-  "name": "genomicsengland-hellonode",
+  "name": "delu2000-cloud/hellonode",
   "version": "1.0.0",
   "description": "A Hello World HTTP server",
   "main": "main.js",
