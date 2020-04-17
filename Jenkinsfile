@@ -8,7 +8,7 @@ node {
   }
   stage('Test image') {
     app.inside {
-      python3 manage.py test
+      sh 'ls -la'
     }
   }
 }
