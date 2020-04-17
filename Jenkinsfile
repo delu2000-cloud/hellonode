@@ -4,6 +4,11 @@ node {
     checkout scm
   }
   stage('Build image') {
-    app = docker.build("my-image:${env.BUILD_ID}")
+    app = docker.build("${env.JOB_NAME}:${env.BUILD_ID}")
+  }
+  stage('Test image') {
+    app.inside {
+      python3 manage.py test
+    }
   }
 }
