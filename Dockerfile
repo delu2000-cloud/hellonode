@@ -1,8 +1,12 @@
 FROM python:3.6
 
-RUN mkdir /grabwack
-WORKDIR /grabwack
+ENV PYTHONUNBUFFERED 1
 
+RUN mkdir /polls
+WORKDIR /polls
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 HEALTHCHECK --interval=5s \
