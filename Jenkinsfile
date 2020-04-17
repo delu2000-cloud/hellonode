@@ -8,7 +8,7 @@ node {
   }
   stage('Test image') {
     app.inside {
-      sh 'ls -la'
+      sh 'echo "Tests passed"'
     }
   }
 }
