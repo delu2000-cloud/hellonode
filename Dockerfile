@@ -1,10 +1,16 @@
-# use a node base image
-FROM node:7-onbuild
+FROM python:3.6
 
-# set a health check
+ENV PYTHONUNBUFFERED 1
+
+RUN mkdir /grabwack
+WORKDIR /grabwack
+
+COPY . .
+
 HEALTHCHECK --interval=5s \
-            --timeout=5s \
-            CMD curl -f http://127.0.0.1:8000 || exit 1
+          --timeout=5s \
+          CMD curl -f http://127.0.0.1:8000 || exit 1
 
-# tell docker what port to expose
+CMD ["/bin/bash", "initialization-script.sh"]
+
 EXPOSE 8000
